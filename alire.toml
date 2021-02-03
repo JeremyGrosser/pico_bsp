@@ -1,0 +1,12 @@
+name = "pico_bsp"
+description = "Board support package for Raspberry Pi Pico"
+version = "0.1.0"
+
+authors = ["Jeremy Grosser"]
+maintainers = ["Jeremy Grosser <jeremy@synack.me>"]
+maintainers-logins = ["JeremyGrosser"]
+tags = ["embedded", "nostd", "raspberrypi", "pico", "rp2040", "bsp"]
+
+[[depends-on]]
+hal = "^0.1.0"
+rp2040_hal = "^0.1.0"

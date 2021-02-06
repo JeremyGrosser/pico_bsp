@@ -1,5 +1,6 @@
 with RP.Clock; use RP.Clock;
 with RP.GPIO;  use RP.GPIO;
+with RP.ADC;   use RP.ADC;
 
 package Pico is
    GP0  : aliased GPIO_Point := (Pin => 0);
@@ -35,4 +36,6 @@ package Pico is
    LED  : GPIO_Point renames GP25;
 
    XOSC_Frequency : XOSC_Hertz := 12_000_000;
+
+   VSYS_DIV_3 : constant ADC_Channel := 3;
 end Pico;

@@ -16,7 +16,8 @@ project Pico_Bsp is
    for Create_Missing_Dirs use "True";
    for Library_Dir use "lib";
 
-   Linker_Switches := RP2040_HAL.Linker_Switches;
+   Linker_Switches := RP2040_HAL.Linker_Switches &
+       (Project'Project_Dir & "src/boot2_w25q080.S");
 
    type Library_Type_Type is ("relocatable", "static", "static-pic");
    Library_Type : Library_Type_Type :=

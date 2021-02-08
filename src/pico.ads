@@ -1,3 +1,8 @@
+--
+--  Copyright 2021 (C) Jeremy Grosser
+--
+--  SPDX-License-Identifier: BSD-3-Clause
+--
 with RP.Clock; use RP.Clock;
 with RP.GPIO;  use RP.GPIO;
 with RP.ADC;   use RP.ADC;

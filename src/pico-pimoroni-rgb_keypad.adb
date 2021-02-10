@@ -1,16 +1,24 @@
 with HAL;      use HAL;
 with HAL.SPI;  use HAL.SPI;
+with HAL.I2C;  use HAL.I2C;
 with HAL.GPIO; use HAL.GPIO;
 
+with RP.I2C_Master;
 with RP.SPI;
 with RP.Device;
 
 package body Pico.Pimoroni.RGB_Keypad is
 
-   SPI : RP.SPI.SPI_Port renames RP.Device.SPI_0;
-   SPI_CLK : RP.GPIO.GPIO_Point renames Pico.GP18;
+   SPI      : RP.SPI.SPI_Port renames RP.Device.SPI_0;
+   SPI_CLK  : RP.GPIO.GPIO_Point renames Pico.GP18;
    SPI_MOSI : RP.GPIO.GPIO_Point renames Pico.GP19;
-   SPI_CS : RP.GPIO.GPIO_Point renames Pico.GP17;
+   SPI_CS   : RP.GPIO.GPIO_Point renames Pico.GP17;
+
+   I2C     : RP.I2C_Master.I2C_Master_Port renames RP.Device.I2C_0;
+   I2C_SDA : RP.GPIO.GPIO_Point renames Pico.GP4;
+   I2C_SCL : RP.GPIO.GPIO_Point renames Pico.GP5;
+
+   Button_State : UInt16 := 0;
 
    Nbr_Of_LEDs : constant := 16;
 
@@ -51,6 +59,12 @@ package body Pico.Pimoroni.RGB_Keypad is
 
       SPI_CLK.Configure (Output, Floating, RP.GPIO.SPI);
       SPI_MOSI.Configure (Output, Floating, RP.GPIO.SPI);
+
+      I2C.Enable (400_000);
+
+      I2C_SDA.Configure (Output, Pull_Up, RP.GPIO.I2C);
+      I2C_SCL.Configure (Output, Pull_Up, RP.GPIO.I2C);
+
    end Initialize;
 
    ---------
@@ -141,6 +155,29 @@ package body Pico.Pimoroni.RGB_Keypad is
       SPI_CS.Clear;
       SPI.Transmit (LED_Data, Status);
       SPI_CS.Set;
+
+      declare
+         Status : I2C_Status;
+         Data : I2C_Data (1 .. 2) := (others => 255);
+      begin
+         I2C.Mem_Read (Addr          => 32,
+                       Mem_Addr      => 0,
+                       Mem_Addr_Size => Memory_Size_8b,
+                       Data          => Data,
+                       Status        => Status);
+
+         Button_State :=
+           not (UInt16 (Data (1)) or Shift_Left (UInt16 (Data (2)), 8));
+      end;
    end Update;
+
+   -------------
+   -- Pressed --
+   -------------
+
+   function Pressed (P : Pad) return Boolean is
+   begin
+      return (Button_State and Shift_Left (UInt16 (1), Natural (P))) /= 0;
+   end Pressed;
 
 end Pico.Pimoroni.RGB_Keypad;

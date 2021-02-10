@@ -1,7 +1,7 @@
 name = "pico_bsp"
 description = "Board support package for Raspberry Pi Pico"
 version = "0.1.0"
-licenses = ["BSD 3-Clauses"]
+licenses = ["BSD-3-Clause"]
 
 authors = ["Jeremy Grosser"]
 maintainers = ["Jeremy Grosser <jeremy@synack.me>"]

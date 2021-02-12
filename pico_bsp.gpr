@@ -24,7 +24,6 @@ project Pico_Bsp is
      external ("PICO_BSP_LIBRARY_TYPE", external ("LIBRARY_TYPE", "static"));
    for Library_Kind use Library_Type;
 
-   package Naming renames RP2040_HAL.Naming;
    package Compiler renames RP2040_HAL.Compiler;
    package Binder renames RP2040_HAL.Binder;
 

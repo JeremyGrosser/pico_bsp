@@ -12,7 +12,7 @@ project Pico_BSP is
        ("-T" & Project'Project_Dir & "zfp_startup/memmap_default.ld",
         Project'Project_Dir & "zfp_startup/boot2_w25q080.S");
 
-    for Library_Name use "Pico_Bsp_Zfp";
+    for Library_Name use "pico_bsp";
     for Library_Version use "0.1.0";
     for Library_Dir use "lib";
 

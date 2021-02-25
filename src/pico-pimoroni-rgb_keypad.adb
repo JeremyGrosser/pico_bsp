@@ -49,10 +49,8 @@ package body Pico.Pimoroni.RGB_Keypad is
 
    procedure Initialize is
    begin
-      RP.Clock.Enable (RP.Clock.PERI);
-
-      SPI.Set_Speed (1_000_000);
       SPI.Enable;
+      SPI.Set_Speed (20_000_000);
 
       SPI_CS.Configure (Output);
       SPI_CS.Set;

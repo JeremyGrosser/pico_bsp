@@ -14,6 +14,8 @@ package body Pico.Pimoroni.RGB_Keypad is
    SPI_MOSI : RP.GPIO.GPIO_Point renames Pico.GP19;
    SPI_CS   : RP.GPIO.GPIO_Point renames Pico.GP17;
 
+   INT     : RP.GPIO.GPIO_Point renames Pico.GP3;
+
    I2C     : RP.I2C_Master.I2C_Master_Port renames RP.Device.I2C_0;
    I2C_SDA : RP.GPIO.GPIO_Point renames Pico.GP4;
    I2C_SCL : RP.GPIO.GPIO_Point renames Pico.GP5;
@@ -42,6 +44,8 @@ package body Pico.Pimoroni.RGB_Keypad is
       2#111_00000#, 0, 0, 0,
       0, 0, 0, 0
      );
+
+   INT_Handler : Change_Handler := null;
 
    ----------------
    -- Initialize --
@@ -177,5 +181,29 @@ package body Pico.Pimoroni.RGB_Keypad is
    begin
       return (Button_State and Shift_Left (UInt16 (1), Natural (P))) /= 0;
    end Pressed;
+
+   procedure Keypad_INT_Handler
+      (Pin     : RP.GPIO.GPIO_Pin;
+       Trigger : RP.GPIO.Interrupt_Triggers)
+   is
+      pragma Unreferenced (Pin);
+      pragma Unreferenced (Trigger);
+   begin
+      if INT_Handler /= null then
+         INT_Handler.all;
+      end if;
+   end Keypad_INT_Handler;
+
+   procedure Attach
+      (Handler : Change_Handler)
+   is
+   begin
+      INT_Handler := Handler;
+      --  INT is active-low and falls when any pad is pressed or released.
+      --  An external 10k pullup resistor is connected, no internal pullup is needed.
+      INT.Configure (Input, Floating);
+      INT.Set_Interrupt_Handler (Keypad_INT_Handler'Access);
+      INT.Enable_Interrupt (RP.GPIO.Falling_Edge);
+   end Attach;
 
 end Pico.Pimoroni.RGB_Keypad;

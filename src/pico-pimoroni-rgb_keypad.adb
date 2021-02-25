@@ -67,6 +67,7 @@ package body Pico.Pimoroni.RGB_Keypad is
       I2C_SDA.Configure (Output, Pull_Up, RP.GPIO.I2C);
       I2C_SCL.Configure (Output, Pull_Up, RP.GPIO.I2C);
 
+      INT.Configure (Input, Floating);
    end Initialize;
 
    ---------
@@ -182,6 +183,10 @@ package body Pico.Pimoroni.RGB_Keypad is
       return (Button_State and Shift_Left (UInt16 (1), Natural (P))) /= 0;
    end Pressed;
 
+   ------------------------
+   -- Keypad_INT_Handler --
+   ------------------------
+
    procedure Keypad_INT_Handler
       (Pin     : RP.GPIO.GPIO_Pin;
        Trigger : RP.GPIO.Interrupt_Triggers)
@@ -194,14 +199,17 @@ package body Pico.Pimoroni.RGB_Keypad is
       end if;
    end Keypad_INT_Handler;
 
+   ------------
+   -- Attach --
+   ------------
+
    procedure Attach
       (Handler : Change_Handler)
    is
    begin
-      INT_Handler := Handler;
       --  INT is active-low and falls when any pad is pressed or released.
       --  An external 10k pullup resistor is connected, no internal pullup is needed.
-      INT.Configure (Input, Floating);
+      INT_Handler := Handler;
       INT.Set_Interrupt_Handler (Keypad_INT_Handler'Access);
       INT.Enable_Interrupt (RP.GPIO.Falling_Edge);
    end Attach;

@@ -53,9 +53,8 @@ package body Pico.Pimoroni.Audio_Pack is
    is
    begin
       for S of Samples loop
-         --RP.Device.PIO_0.Transmit (0, UInt32 (S + Sample'Last));
-         RP.Device.PIO_0.Transmit (0, 16#66666666#);
-         RP.Device.PIO_0.Transmit (0, 16#00000000#);
+         -- Sample is signed but PIO only understands unsigned, convert before sending each sample.
+         RP.Device.PIO_0.Transmit (0, UInt32 (S + Sample'Last));
       end loop;
    end Write;
 end Pico.Pimoroni.Audio_Pack;

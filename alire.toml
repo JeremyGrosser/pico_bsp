@@ -10,5 +10,5 @@ tags = ["embedded", "nostd", "raspberrypi", "pico", "rp2040", "bsp"]
 website = "https://github.com/JeremyGrosser/pico_bsp"
 
 [[depends-on]]
-hal = "^0.1.0"
-rp2040_hal = "^0.2.0"
+hal = "~0.1"
+rp2040_hal = "~0.2"

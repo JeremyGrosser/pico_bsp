@@ -6,7 +6,7 @@ pragma Style_Checks (Off);
 
 with RP.PIO;
 
-package Audio_I2S is
+package Pico.Audio_I2S_PIO is
 
    ---------------
    -- Audio_I2s --
@@ -29,4 +29,4 @@ package Audio_I2S is
          16#f82e#); --   7: set    x, 14           side 3     
                     --  .wrap
 
-end Audio_I2S;
+end Pico.Audio_I2S_PIO;

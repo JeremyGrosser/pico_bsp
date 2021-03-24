@@ -1,26 +1,16 @@
-with HAL; use HAL;
-with RP;  use RP;
-with System;
+with RP.Device;
+with RP.GPIO;
+with Pico.Audio_I2S;
 
 package Pico.Pimoroni.Audio_Pack is
 
-   Sample_Bits : constant := 16;
-   Sample_Rate : constant Hertz := 44_100;
+   I2S  : Pico.Audio_I2S.I2S_Device
+      (Data  => Pico.GP9'Access,
+       BCLK  => Pico.GP10'Access,
+       LRCLK => Pico.GP11'Access,
+       PIO   => RP.Device.PIO_0'Access,
+       SM    => 0);
 
-   type Sample is new Integer range -2 ** (Sample_Bits - 1) .. 2 ** (Sample_Bits - 1) - 1
-      with Size => Sample_Bits;
-
-   type Sample_Array is array (Integer range <>) of Sample;
-
-   procedure Initialize;
-   --  This will configure the required peripherals and pins for the RGB Keypad:
-   --   - SPI1
-   --   - GP9  I2S Data
-   --   - GP10 I2S BCK
-   --   - GP11 I2S LRCK
-   --   - GP22 MUTE
-
-   procedure Write
-      (Samples : Sample_Array);
+   MUTE : RP.GPIO.GPIO_Point := Pico.GP22;
 
 end Pico.Pimoroni.Audio_Pack;

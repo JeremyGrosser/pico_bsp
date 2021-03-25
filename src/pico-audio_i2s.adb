@@ -78,7 +78,7 @@ package body Pico.Audio_I2S is
    begin
       for D of Data loop
          if D < 0 then
-            U := UInt32 (D * (-1));
+            U := not UInt32 (D * (-1));
          else
             U := UInt32 (D);
          end if;

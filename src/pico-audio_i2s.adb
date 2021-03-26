@@ -9,9 +9,6 @@ package body Pico.Audio_I2S is
       (This   : in out I2S_Device;
        Offset : PIO_Address)
    is
-      Pin_Mask : constant UInt32 :=
-         Shift_Left (UInt32 (1), Natural (This.Data.Pin)) or
-         Shift_Left (UInt32 (3), Natural (This.BCLK.Pin));
    begin
       This.Config := Default_SM_Config;
       Set_Out_Pins (This.Config, This.Data.Pin, 1);

@@ -48,9 +48,13 @@ package body Pico.Audio_I2S is
        Frequency : HAL.Audio.Audio_Frequency;
        Channels  : Channel_Count := 1)
    is
-      SM_Offset : constant PIO_Address := 0;
-      AF        : constant RP.GPIO.GPIO_Function := RP.PIO.GPIO_Function (This.PIO.all);
+      DMA_Config : DMA_Configuration :=
+         (Increment_Read => True,
+          others         => <>);
+      SM_Offset  : constant PIO_Address := 0;
+      AF         : constant RP.GPIO.GPIO_Function := RP.PIO.GPIO_Function (This.PIO.all);
    begin
+      RP.DMA.Enable;
       This.Data.Configure (Output, Pull_Both, AF);
       This.BCLK.Configure (Output, Pull_Both, AF);
       This.LRCLK.Configure (Output, Pull_Both, AF);
@@ -62,8 +66,16 @@ package body Pico.Audio_I2S is
 
       Program_Init (This, SM_Offset);
       Set_Frequency (This, Frequency);
-
       Set_Enabled (This.PIO.all, This.SM, True);
+
+      DMA_Config.Trigger := DMA_Request_Trigger'Val
+         (DMA_Request_Trigger'Pos (PIO0_TX0) + (This.PIO.Num * 8) + Natural (This.SM));
+      if Channels = 1 then
+         DMA_Config.Data_Size := Transfer_16;
+      else
+         DMA_Config.Data_Size := Transfer_32;
+      end if;
+      RP.DMA.Configure (This.DMA_Channel, DMA_Config);
    end Initialize;
 
    function Twos_Complement (I : Integer_16)
@@ -82,20 +94,24 @@ package body Pico.Audio_I2S is
       (This : in out I2S_Device;
        Data : HAL.Audio.Audio_Buffer)
    is
-      U : UInt32;
-      I : Integer := Data'First;
+      Count : HAL.UInt32 := Data'Length;
    begin
-      while I < Data'Last loop
-         if This.Channels > 1 then
-            U := Shift_Left (UInt32 (Twos_Complement (Data (I))), 16)
-                 or UInt32 (Twos_Complement (Data (I + 1)));
-            I := I + 2;
-         else
-            U := UInt32 (Twos_Complement (Data (I + 1)));
-            I := I + 1;
-         end if;
-         Put (This.PIO.all, This.SM, U);
+      --  Wait for previous DMA transfer to finish before modifying the buffer.
+      while Busy (This.DMA_Channel) loop
+         null;
       end loop;
+
+      This.Buffer (1 .. Data'Length) := Data;
+
+      if This.Channels > 1 then
+         Count := Data'Length / 2;
+      end if;
+
+      RP.DMA.Start
+         (Channel => This.DMA_Channel,
+          From    => This.Buffer'Address,
+          To      => TX_FIFO_Address (This.PIO.all, This.SM),
+          Count   => Count);
    end Transmit;
 
    overriding

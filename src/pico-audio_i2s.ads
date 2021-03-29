@@ -1,4 +1,5 @@
 with RP.PIO; use RP.PIO;
+with RP.DMA; use RP.DMA;
 with RP.GPIO;
 
 with Interfaces;
@@ -12,12 +13,14 @@ package Pico.Audio_I2S is
    subtype Channel_Count is Positive range 1 .. 2;
 
    type I2S_Device
-      (Data     : not null access RP.GPIO.GPIO_Point;
-       BCLK     : not null access RP.GPIO.GPIO_Point;
-       LRCLK    : not null access RP.GPIO.GPIO_Point;
-       PIO      : not null access PIO_Device;
-       SM       : PIO_SM;
-       Channels : Channel_Count)
+      (Data        : not null access RP.GPIO.GPIO_Point;
+       BCLK        : not null access RP.GPIO.GPIO_Point;
+       LRCLK       : not null access RP.GPIO.GPIO_Point;
+       PIO         : not null access PIO_Device;
+       SM          : PIO_SM;
+       Channels    : Channel_Count;
+       DMA_Channel : DMA_Channel_Id;
+       Buffer_Size : Positive)
    is limited new HAL.Audio.Audio_Stream with private;
 
    procedure Initialize
@@ -30,11 +33,14 @@ package Pico.Audio_I2S is
       (This      : in out I2S_Device;
        Frequency : HAL.Audio.Audio_Frequency);
 
+   --  Copies Data into the buffer and starts a DMA transfer. If a DMA transfer
+   --  is already in progress, Transmit will wait for it to finish before
+   --  modifying the buffer.
    overriding
    procedure Transmit
       (This : in out I2S_Device;
        Data : HAL.Audio.Audio_Buffer)
-   with Pre => Data'Length mod This.Channels = 0;
+    with Pre => Data'Length <= This.Buffer_Size;
 
    --  The PIO program currently does not support I2S receive. This function
    --  will block on RX FIFO forever.
@@ -55,14 +61,17 @@ private
       return HAL.UInt16;
 
    type I2S_Device
-      (Data     : not null access RP.GPIO.GPIO_Point;
-       BCLK     : not null access RP.GPIO.GPIO_Point;
-       LRCLK    : not null access RP.GPIO.GPIO_Point;
-       PIO      : not null access PIO_Device;
-       SM       : PIO_SM;
-       Channels : Channel_Count)
+      (Data        : not null access RP.GPIO.GPIO_Point;
+       BCLK        : not null access RP.GPIO.GPIO_Point;
+       LRCLK       : not null access RP.GPIO.GPIO_Point;
+       PIO         : not null access PIO_Device;
+       SM          : PIO_SM;
+       Channels    : Channel_Count;
+       DMA_Channel : DMA_Channel_Id;
+       Buffer_Size : Positive)
    is limited new HAL.Audio.Audio_Stream with record
-      Config   : PIO_SM_Config;
+      Config : PIO_SM_Config;
+      Buffer : aliased HAL.Audio.Audio_Buffer (1 .. Buffer_Size);
    end record;
 
 end Pico.Audio_I2S;

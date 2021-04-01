@@ -78,17 +78,6 @@ package body Pico.Audio_I2S is
       RP.DMA.Configure (This.DMA_Channel, DMA_Config);
    end Initialize;
 
-   function Twos_Complement (I : Integer_16)
-      return UInt16
-   is
-   begin
-      if I < 0 then
-         return not UInt16 (I * (-1));
-      else
-         return UInt16 (I);
-      end if;
-   end Twos_Complement;
-
    overriding
    procedure Transmit
       (This : in out I2S_Device;

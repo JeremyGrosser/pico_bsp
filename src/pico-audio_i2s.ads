@@ -56,10 +56,6 @@ private
       (This   : in out I2S_Device;
        Offset : PIO_Address);
 
-   function Twos_Complement
-      (I : Interfaces.Integer_16)
-      return HAL.UInt16;
-
    type I2S_Device
       (Data        : not null access RP.GPIO.GPIO_Point;
        BCLK        : not null access RP.GPIO.GPIO_Point;

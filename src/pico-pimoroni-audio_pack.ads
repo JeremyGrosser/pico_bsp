@@ -12,7 +12,7 @@ package Pico.Pimoroni.Audio_Pack is
        SM          => 0,
        Channels    => 2,
        DMA_Channel => 0,
-       Buffer_Size => 128);
+       Buffer_Size => 32);
 
    MUTE : RP.GPIO.GPIO_Point := Pico.GP22;
 

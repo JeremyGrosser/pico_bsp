@@ -2,7 +2,6 @@ with RP.PIO; use RP.PIO;
 with RP.DMA; use RP.DMA;
 with RP.GPIO;
 
-with Interfaces;
 with HAL.Audio;
 with HAL;
 

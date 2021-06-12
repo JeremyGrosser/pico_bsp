@@ -1,6 +1,6 @@
 name = "pico_bsp"
 description = "Board support package for Raspberry Pi Pico"
-version = "0.3.0"
+version = "0.4.0"
 licenses = "BSD-3-Clause"
 
 authors = ["Jeremy Grosser"]
@@ -11,4 +11,4 @@ website = "https://github.com/JeremyGrosser/pico_bsp"
 
 [[depends-on]]
 hal = "~0.1"
-rp2040_hal = "~0.3"
+rp2040_hal = "~0.4"

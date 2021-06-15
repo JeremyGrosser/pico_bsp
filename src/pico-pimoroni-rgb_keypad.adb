@@ -1,7 +1,6 @@
 with HAL;      use HAL;
 with HAL.SPI;  use HAL.SPI;
 with HAL.I2C;  use HAL.I2C;
-with HAL.GPIO; use HAL.GPIO;
 
 with RP.I2C_Master;
 with RP.SPI;

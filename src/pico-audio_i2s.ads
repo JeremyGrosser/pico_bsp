@@ -15,8 +15,8 @@ package Pico.Audio_I2S is
       (Data        : not null access RP.GPIO.GPIO_Point;
        BCLK        : not null access RP.GPIO.GPIO_Point;
        LRCLK       : not null access RP.GPIO.GPIO_Point;
-       PIO         : not null access PIO_Device;
-       SM          : PIO_SM;
+       PIO         : not null access RP.PIO.PIO_Device'Class;
+       SM          : RP.PIO.PIO_SM;
        Channels    : Channel_Count;
        DMA_Channel : DMA_Channel_Id;
        Buffer_Size : Positive)
@@ -59,7 +59,7 @@ private
       (Data        : not null access RP.GPIO.GPIO_Point;
        BCLK        : not null access RP.GPIO.GPIO_Point;
        LRCLK       : not null access RP.GPIO.GPIO_Point;
-       PIO         : not null access PIO_Device;
+       PIO         : not null access PIO_Device'Class;
        SM          : PIO_SM;
        Channels    : Channel_Count;
        DMA_Channel : DMA_Channel_Id;

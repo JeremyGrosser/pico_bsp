@@ -13,13 +13,18 @@ package body Pico.Audio_I2S is
       This.Config := Default_SM_Config;
       Set_Out_Pins (This.Config, This.Data.Pin, 1);
       Set_Sideset_Pins (This.Config, This.BCLK.Pin);
-      Set_Sideset (This.Config, 2, False, False);
-      Set_Out_Shift (This.Config, False, True, 32);
+      Set_Sideset (This.Config,
+         Bit_Count => 2,
+         Optional  => False,
+         Pindirs   => False);
+      Set_Out_Shift (This.Config,
+         Shift_Right    => False,
+         Autopull       => True,
+         Pull_Threshold => 32);
       Set_Wrap (This.Config,
           Wrap        => Offset + Pico.Audio_I2S_PIO.Audio_I2s_Wrap,
           Wrap_Target => Offset + Pico.Audio_I2S_PIO.Audio_I2s_Wrap_Target);
 
-      Set_Config (This.PIO.all, This.SM, This.Config);
       SM_Initialize (This.PIO.all, This.SM, Offset, This.Config);
 
       Set_Pin_Direction (This.PIO.all, This.SM, This.Data.Pin, Output);

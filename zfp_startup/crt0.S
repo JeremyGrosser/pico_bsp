@@ -307,13 +307,13 @@ __get_current_exception:
 
 
 
-.section .stack
+.section .stack1
 
 .align 5
-    .equ StackSize, 0x800u
+    .equ StackSize, 0x1000
 .space StackSize
 
 .section .heap
 .align 2
-    .equ HeapSize, 0x800
+    .equ HeapSize, 0x1000
 .space HeapSize

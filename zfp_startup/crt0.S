@@ -307,7 +307,7 @@ __get_current_exception:
 
 
 
-.section .stack1
+.section .stack
 
 .align 5
     .equ StackSize, 0x1000

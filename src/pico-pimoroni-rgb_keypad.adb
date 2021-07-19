@@ -164,7 +164,10 @@ package body Pico.Pimoroni.RGB_Keypad is
          Status : I2C_Status;
          Data : I2C_Data (1 .. 2) := (others => 255);
       begin
-         I2C.Mem_Read (Addr          => 32,
+
+         --  HAL.I2C expects 8-bit address (with R/W bit as 0)
+
+         I2C.Mem_Read (Addr          => 16#40#,
                        Mem_Addr      => 0,
                        Mem_Addr_Size => Memory_Size_8b,
                        Data          => Data,

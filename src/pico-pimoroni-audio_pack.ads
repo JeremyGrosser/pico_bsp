@@ -1,3 +1,8 @@
+--
+--  Copyright 2021 (C) Jeremy Grosser <jeremy@synack.me>
+--
+--  SPDX-License-Identifier: BSD-3-Clause
+--
 with RP.Device;
 with RP.GPIO;
 with Pico.Audio_I2S;

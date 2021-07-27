@@ -1,3 +1,8 @@
+--
+--  Copyright 2021 (C) Jeremy Grosser <jeremy@synack.me>
+--
+--  SPDX-License-Identifier: BSD-3-Clause
+--
 with HAL;      use HAL;
 with HAL.SPI;  use HAL.SPI;
 with HAL.I2C;  use HAL.I2C;

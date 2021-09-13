@@ -40,6 +40,10 @@ package Pico is
 
    LED  : GPIO_Point renames GP25;
 
+   --  Pico Datasheet - 4.4 Powerchain - Page 18
+   --  GPIO23 controls the RT6150 PS (Power Save) pin, active low.
+   SMPS_PS : GPIO_Point renames GP23;
+
    XOSC_Frequency : XOSC_Hertz := 12_000_000;
 
    VSYS_DIV_3 : constant ADC_Channel := 3;

@@ -18,7 +18,7 @@ project Pico_BSP is
     Linker_Switches := ("-T", Linker_Script, Boot_Stage_2);
 
     for Library_Name use "pico_bsp";
-    for Library_Version use "0.3.0";
+    for Library_Version use "0.6.0";
     for Library_Dir use "lib";
 
     for Object_Dir use "obj";

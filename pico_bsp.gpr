@@ -1,4 +1,4 @@
-with "hal.gpr";
+with "config/pico_bsp_config.gpr";
 with "rp2040_hal.gpr";
 
 project Pico_BSP is
@@ -6,23 +6,17 @@ project Pico_BSP is
     for Runtime ("Ada") use "zfp-cortex-m0p";
     for Target use "arm-eabi";
 
-    --  RP2040 requires a .boot2 section in the first 256 bytes of
-    --  flash. Ravenscar provides this and a linker script, but ZFP
-    --  profiles need to bring their own.
-    for Languages use ("Ada", "Asm_Cpp");
-    for Source_Dirs use ("src", "zfp_startup");
-
-    Flash_Chip := External ("PICO_BSP_FLASH_CHIP", "w25q080");
-    Boot_Stage_2 := Project'Project_Dir & "zfp_startup/boot2_" & Flash_Chip & ".S";
-    Linker_Script := Project'Project_Dir & "zfp_startup/memmap_default.ld";
-    Linker_Switches := ("-T", Linker_Script, Boot_Stage_2);
+    for Languages use ("Ada");
+    for Source_Dirs use ("src");
 
     for Library_Name use "pico_bsp";
-    for Library_Version use "0.6.0";
     for Library_Dir use "lib";
+    for Library_Version use Project'Library_Name & ".so." & Pico_Bsp_Config.Crate_Version;
 
     for Object_Dir use "obj";
     for Create_Missing_Dirs use "True";
+
+    Linker_Switches := RP2040_HAL.Linker_Switches;
 
     type Library_Type_Type is ("relocatable", "static", "static-pic");
     Library_Type : Library_Type_Type :=

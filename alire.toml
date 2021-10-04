@@ -1,6 +1,6 @@
 name = "pico_bsp"
 description = "Board support package for Raspberry Pi Pico"
-version = "0.6.0"
+version = "0.7.0"
 licenses = "BSD-3-Clause"
 
 authors = ["Jeremy Grosser"]
@@ -11,4 +11,10 @@ website = "https://github.com/JeremyGrosser/pico_bsp"
 
 [[depends-on]]
 hal = "~0.1"
-rp2040_hal = "~0.6"
+rp2040_hal = "~0.7"
+
+[configuration.values]
+rp2040_hal.Flash_Chip = "w25qxx"
+
+[[pins]]
+rp2040_hal = { url='https://github.com/JeremyGrosser/rp2040_hal' }

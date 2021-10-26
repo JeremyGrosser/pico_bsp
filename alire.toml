@@ -15,6 +15,3 @@ rp2040_hal = "~0.7"
 
 [configuration.values]
 rp2040_hal.Flash_Chip = "w25qxx"
-
-[[pins]]
-rp2040_hal = { url='https://github.com/JeremyGrosser/rp2040_hal' }

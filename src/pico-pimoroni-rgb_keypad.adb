@@ -68,7 +68,7 @@ package body Pico.Pimoroni.RGB_Keypad is
       SPI_CLK.Configure (Output, Floating, RP.GPIO.SPI);
       SPI_MOSI.Configure (Output, Floating, RP.GPIO.SPI);
 
-      I2C.Enable (400_000);
+      I2C.Configure (400_000);
 
       I2C_SDA.Configure (Output, Pull_Up, RP.GPIO.I2C);
       I2C_SCL.Configure (Output, Pull_Up, RP.GPIO.I2C);

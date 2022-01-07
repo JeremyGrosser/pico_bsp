@@ -10,8 +10,8 @@ tags = ["embedded", "nostd", "raspberrypi", "pico", "rp2040", "bsp"]
 website = "https://pico-doc.synack.me/"
 
 [[depends-on]]
-hal = "~0.1"
-rp2040_hal = "~1"
+hal = "^0.1"
+rp2040_hal = "^1"
 
 [configuration.values]
 rp2040_hal.Flash_Chip = "w25qxx"

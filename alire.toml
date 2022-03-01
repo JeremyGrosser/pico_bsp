@@ -11,7 +11,7 @@ website = "https://pico-doc.synack.me/"
 
 [[depends-on]]
 hal = "~0.1"
-rp2040_hal = ">=1.3.0 & <2"
+rp2040_hal = "^1.3"
 
 [configuration.values]
 rp2040_hal.Flash_Chip = "w25qxx"

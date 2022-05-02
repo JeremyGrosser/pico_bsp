@@ -1,6 +1,6 @@
 name = "pico_bsp"
 description = "Board support package for Raspberry Pi Pico"
-version = "1.4.0"
+version = "1.5.0"
 licenses = "BSD-3-Clause"
 
 authors = ["Jeremy Grosser"]
@@ -11,7 +11,7 @@ website = "https://pico-doc.synack.me/"
 
 [[depends-on]]
 hal = "~0.1"
-rp2040_hal = "^1.4"
+rp2040_hal = "^1.5"
 
 [configuration.values]
 rp2040_hal.Flash_Chip = "w25qxx"

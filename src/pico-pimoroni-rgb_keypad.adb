@@ -20,7 +20,7 @@ package body Pico.Pimoroni.RGB_Keypad is
 
    INT     : RP.GPIO.GPIO_Point renames Pico.GP3;
 
-   I2C     : RP.I2C_Master.I2C_Master_Port renames RP.Device.I2C_0;
+   I2C     : RP.I2C_Master.I2C_Master_Port renames RP.Device.I2CM_0;
    I2C_SDA : RP.GPIO.GPIO_Point renames Pico.GP4;
    I2C_SCL : RP.GPIO.GPIO_Point renames Pico.GP5;
 

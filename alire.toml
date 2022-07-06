@@ -17,4 +17,4 @@ rp2040_hal = "^2.0"
 rp2040_hal.Flash_Chip = "w25qxx"
 
 [[pins]]
-rp2040_hal = { url='https://github.com/JeremyGrosser/rp2040_hal#i2c' }
+rp2040_hal = { url='https://github.com/JeremyGrosser/rp2040_hal' }

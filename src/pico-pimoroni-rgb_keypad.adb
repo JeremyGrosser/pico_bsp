@@ -7,6 +7,7 @@ with HAL;      use HAL;
 with HAL.SPI;  use HAL.SPI;
 with HAL.I2C;  use HAL.I2C;
 
+with RP.GPIO.Interrupts;
 with RP.I2C_Master;
 with RP.SPI;
 with RP.Device;
@@ -219,7 +220,7 @@ package body Pico.Pimoroni.RGB_Keypad is
       --  INT is active-low and falls when any pad is pressed or released.
       --  An external 10k pullup resistor is connected, no internal pullup is needed.
       INT_Handler := Handler;
-      INT.Set_Interrupt_Handler (Keypad_INT_Handler'Access);
+      RP.GPIO.Interrupts.Attach_Handler (INT, Keypad_INT_Handler'Access);
       INT.Enable_Interrupt (RP.GPIO.Falling_Edge);
    end Attach;
 

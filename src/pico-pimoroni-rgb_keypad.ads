@@ -44,15 +44,4 @@ package Pico.Pimoroni.RGB_Keypad is
    function Pressed (P : Pad) return Boolean;
    --  Return True if the pad was pressed during the last call to Update()
 
-   type Change_Handler is access procedure;
-   procedure Attach
-      (Handler : Change_Handler);
-   --  Handler will be called when any pad is pressed or released
-
-private
-
-   procedure Keypad_INT_Handler
-      (Pin     : RP.GPIO.GPIO_Pin;
-       Trigger : RP.GPIO.Interrupt_Triggers);
-
 end Pico.Pimoroni.RGB_Keypad;

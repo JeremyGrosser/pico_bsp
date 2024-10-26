@@ -3,7 +3,6 @@
 --
 --  SPDX-License-Identifier: BSD-3-Clause
 --
-with RP.GPIO;
 with HAL;
 
 package Pico.Pimoroni.RGB_Keypad is

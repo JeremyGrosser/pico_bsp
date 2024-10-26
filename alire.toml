@@ -1,6 +1,6 @@
 name = "pico_bsp"
 description = "Board support package for Raspberry Pi Pico"
-version = "2.1.0"
+version = "2.2.0"
 licenses = "BSD-3-Clause"
 
 authors = ["Jeremy Grosser"]
@@ -10,7 +10,6 @@ tags = ["embedded", "nostd", "raspberrypi", "pico", "rp2040", "bsp"]
 website = "https://pico-doc.synack.me/"
 
 [[depends-on]]
-hal = "~0.3"
 rp2040_hal = "^2"
 
 [configuration.values]

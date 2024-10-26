@@ -10,6 +10,7 @@ with HAL.I2C;  use HAL.I2C;
 with RP.I2C_Master;
 with RP.SPI;
 with RP.Device;
+with RP.GPIO;
 
 package body Pico.Pimoroni.RGB_Keypad is
 
@@ -122,7 +123,7 @@ package body Pico.Pimoroni.RGB_Keypad is
                      (255 - Shift_Right (UInt32 (S) *
                         (255 - Remainder), 8)), 8));
 
-         case (Region) is
+         case Region is
             when      0 => R := V; G := T; B := A;
             when      1 => R := Q; G := V; B := A;
             when      2 => R := A; G := V; B := T;

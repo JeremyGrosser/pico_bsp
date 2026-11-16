@@ -4,7 +4,6 @@
 --  SPDX-License-Identifier: BSD-3-Clause
 --
 with RP.PIO.Audio_I2S;
-with RP.Device;
 with RP.GPIO;
 
 package Pico.Pimoroni.Audio_Pack is
@@ -13,7 +12,7 @@ package Pico.Pimoroni.Audio_Pack is
       (Data        => Pico.GP9'Access,
        BCLK        => Pico.GP10'Access,
        LRCLK       => Pico.GP11'Access,
-       PIO         => RP.Device.PIO_0'Access,
+       PIO         => 0,
        SM          => 0,
        Channels    => 2,
        DMA_Channel => 0,
